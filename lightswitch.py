@@ -1,4 +1,5 @@
 import tkinter as tk
+import os
 window = tk.Tk()
 
 button = tk.Button(text='...', bg="white", fg="black")
@@ -14,9 +15,12 @@ def updateState():#Updates the text of the button and the color of the backgroun
     global buttonstates, screenstates, button
     buttonstates.reverse()
     screenstates.reverse()
-    with open('actions.log', 'a') as file:
-        file.write(f'The light has been turned {buttonstates[0]}\n')
-
+    if not os.path.exists('actions.log'):
+        with open('actions.log', 'w') as file:
+            file.write(f'The light has been turned {buttonstates[0]}\n')
+    else:
+        with open('actions.log', 'a') as file:
+            file.write(f'The light has been turned {buttonstates[0]}\n')
     button.config(text=f"Turn the screen {buttonstates[1]}")
     window.config(bg=screenstates[0])
 
